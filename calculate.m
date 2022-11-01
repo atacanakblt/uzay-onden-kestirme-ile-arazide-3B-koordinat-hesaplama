@@ -1,21 +1,20 @@
-% Atacan AKBULUT 365617 2.Öðretim A Grubu
 
 clc,clear;clear all;
-% Dýþ Yöneltme Elemanlarý ve Ek Bilgilerin Çaðrýlmasý
-DYE=importdata('Dýþ Yöneltme Elemanlarý.txt');
+% DÃ¼ÅŸey YÃ¶neltme ElemanlarÄ± ve Ek Bilgilerin Ã‡aÄŸrÄ±lmasÄ±
+DYE=importdata('DÃ¼ÅŸey YÃ¶neltme ElemanlarÄ±.txt');
 EB=importdata('Ek Bilgiler.txt');
-% Resimlerin Açýlmasý
-numfiles=input('Yüklenecek resim sayýsýný giriniz: ');
+% Resimlerin AÃ§Ä±lmasÄ±
+numfiles=input('YÃ¼klenecek resim sayÄ±sÄ±nÄ± giriniz: ');
 for i=1:numfiles
-    [FileName,PathName] = uigetfile('*.*','Görüntü dosyasý seçimi...');
+    [FileName,PathName] = uigetfile('*.*','GÃ¶rÃ¼ntÃ¼ dosyasÄ± seÃ§imi...');
     M{i}=imread(FileName);
 end
 [row, sutun]=size(M{i}(:,:,1));
-% Piksel Koordinatlarýnýn Okunmasý
+% Piksel KoordinatlarÄ±nÄ±n OkunmasÄ±
 [kx,ky]=cpselect(M{i-1},M{i},'Wait', true);
 [m n]=size(kx);
 nn=(1:m)';
-% Piksel-Resim Koordinat Dönüþümü
+% Piksel-Resim Koordinat DÃ¶nÃ¼ÅŸÃ¼mÃ¼
 px=EB(1,1);
 foc=EB(1,2);
 xo=EB(1,3);
@@ -23,11 +22,11 @@ yo=EB(1,4);
 % Sol Resim
 xrl=(sutun/2-kx(:,1))*(px/1000)-xo;
 yrl=(kx(:,2)-row/2)*(px/1000)-yo;
-% Sað Resim
+% Sag Resim
 xrr=(sutun/2-ky(:,1))*(px/1000)-xo;
 yrr=(ky(:,2)-row/2)*(px/1000)-yo;
 tnokta=[xrl yrl xrr yrr];
-%% Uzay Önden Kestirme (Intersection problem)
+%% Uzay Ã–nden Kestirme (Intersection problem)
 
 degrad=180/pi;
 
@@ -126,7 +125,7 @@ disp('XYZ intersected point');
 disp('residuals');
 v=f-B*del
 end
-% Noktalarýn kayýt edilmesi
+% NoktalarÄ±n kayÄ±t edilmesi
 No(:,1)=(1:1:size(koord,1));
 X=koord(:,1);
 Y=koord(:,2);
@@ -138,8 +137,8 @@ save('harita.ncn','NOKTA','-ascii');
 ccl=[No xrl yrl];
 save('Sol Resim Koordinat Listesi .doc','ccl','-ascii');
 ccr=[No xrr yrr];
-save('Sað Resim Koordinat Listesi .doc','ccr','-ascii');
+save('SaÃ° Resim Koordinat Listesi .doc','ccr','-ascii');
 cpl=[No kx(:,1)  ky(:,1)];
 save('Sol Piksel Koordinat Listesi .doc','cpl','-ascii');
 cpr=[No kx(:,2)  ky(:,2)];
-save('Sað Piksel Koordinat Listesi .doc','cpr','-ascii');
+save('SaÃ° Piksel Koordinat Listesi .doc','cpr','-ascii');
